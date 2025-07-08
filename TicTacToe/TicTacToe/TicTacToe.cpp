@@ -61,11 +61,11 @@ int main()
     while (active) {
         std::cout << "Player 1's turn, choose x: ";
         std::cin >> playerChoice[1];
-        std::cout << std::endl;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         std::cout << "Player 1's turn, choose y: ";
         std::cin >> playerChoice[0];
-        std::cout << std::endl;
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         if (playerChoice[0] > 0 && playerChoice[0] < 4 && playerChoice[1] > 0 && playerChoice[1] < 4) {
             if (board[playerChoice[0] - 1][playerChoice[1] - 1] == ' ') {
@@ -82,9 +82,11 @@ int main()
 
         std::cout << "Player 2's turn, choose x: ";
         std::cin >> playerChoice[1];
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         std::cout << "Player 2's turn, choose y: ";
         std::cin >> playerChoice[0];
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         if (playerChoice[0] > 0 && playerChoice[0] < 4 && playerChoice[1] > 0 && playerChoice[1] < 4) {
             if (board[playerChoice[0] - 1][playerChoice[1] - 1] == ' ') {
