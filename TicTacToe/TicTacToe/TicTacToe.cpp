@@ -1,6 +1,7 @@
 #include <iostream>
 
 char board[3][3] { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '} };
+int moveCount = 0;
 
 void printBoard() {
     for (int i = 0; i < 3; i++) {
@@ -19,6 +20,7 @@ int getUserInput() {
         if (!std::cin || choice < 1 || choice > 3) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input, try again: ";
             continue;
         }
 
@@ -64,46 +66,67 @@ char checkForWin() {
         return board[2][0];
     }
 
+    // incase of a draw
+    if (moveCount == 9) {
+        return 'd';
+    }
+
     return 0;
 }
 
 int main() {
     bool active{ true };
+
+    char currentPlayer = 'x';
     int playerChoice[2]{ 0, 0 };
 
-    printBoard();
     while (active) {
-        std::cout << "Player 1's turn, choose x: ";
+        printBoard();
+
+        std::cout << "Player " << currentPlayer << "'s turn, choose x coordinate: ";
         playerChoice[1] = getUserInput();
 
-        std::cout << "Player 1's turn, choose y: ";
+        std::cout << "Player " << currentPlayer << "'s turn, choose y coordinate: ";
         playerChoice[0] = getUserInput();
 
         if (board[playerChoice[0] - 1][playerChoice[1] - 1] == ' ') {
-            board[playerChoice[0] - 1][playerChoice[1] - 1] = 'x';
+            board[playerChoice[0] - 1][playerChoice[1] - 1] = currentPlayer;
+            moveCount++;
+        }
+        else {
+            std::cout << "Occupied space, try again!\n";
+            continue;
         }
 
-        printBoard();
-        if (checkForWin() == 'x') {
-            std::cout << "Player 1 wins!";
+        if (checkForWin() != 0) {
+            printBoard();
+            switch (currentPlayer) {
+            case 'x':
+                std::cout << "Player 1 wins!";
+                break;
+            case 'o':
+                std::cout << "Player 2 wins!";
+                break;
+            case 'd':
+                std::cout << "Draw!";
+                break;
+            default:
+                std::cout << "ERROR encountered during win check";
+                break;
+            }
             return 0;
         }
 
-
-        std::cout << "Player 2's turn, choose x: ";
-        playerChoice[1] = getUserInput();
-
-        std::cout << "Player 2's turn, choose y: ";
-        playerChoice[0] = getUserInput();
-
-        if (board[playerChoice[0] - 1][playerChoice[1] - 1] == ' ') {
-            board[playerChoice[0] - 1][playerChoice[1] - 1] = 'o';
-        }
-
-        printBoard();
-        if (checkForWin() == 'o') {
-            std::cout << "Player 2 wins!";
-            return 0;
+        switch (currentPlayer) {
+        case 'x': 
+            currentPlayer = 'o';
+            break;
+        case 'o':
+            currentPlayer = 'x';
+            break;
+        default:
+            currentPlayer = 'x';
+            break;
         }
     }
 }
