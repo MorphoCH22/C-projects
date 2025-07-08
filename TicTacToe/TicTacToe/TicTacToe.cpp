@@ -2,13 +2,28 @@
 
 char board[3][3] { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '} };
 
-void printBoard()
-{
+void printBoard() {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             std::cout << "[ " << board[i][j] << " ]";
         }
         std::cout << "\n";
+    }
+}
+
+int getUserInput() {
+    while (true) {
+        int choice{};
+        std::cin >> choice;
+
+        if (!std::cin || choice < 1 || choice > 3) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            continue;
+        }
+
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return choice;
     }
 }
 
@@ -52,25 +67,20 @@ char checkForWin() {
     return 0;
 }
 
-int main()
-{
+int main() {
     bool active{ true };
     int playerChoice[2]{ 0, 0 };
 
     printBoard();
     while (active) {
         std::cout << "Player 1's turn, choose x: ";
-        std::cin >> playerChoice[1];
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        playerChoice[1] = getUserInput();
 
         std::cout << "Player 1's turn, choose y: ";
-        std::cin >> playerChoice[0];
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        playerChoice[0] = getUserInput();
 
-        if (playerChoice[0] > 0 && playerChoice[0] < 4 && playerChoice[1] > 0 && playerChoice[1] < 4) {
-            if (board[playerChoice[0] - 1][playerChoice[1] - 1] == ' ') {
-                board[playerChoice[0] - 1][playerChoice[1] - 1] = 'x';
-            }
+        if (board[playerChoice[0] - 1][playerChoice[1] - 1] == ' ') {
+            board[playerChoice[0] - 1][playerChoice[1] - 1] = 'x';
         }
 
         printBoard();
@@ -81,17 +91,13 @@ int main()
 
 
         std::cout << "Player 2's turn, choose x: ";
-        std::cin >> playerChoice[1];
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        playerChoice[1] = getUserInput();
 
         std::cout << "Player 2's turn, choose y: ";
-        std::cin >> playerChoice[0];
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        playerChoice[0] = getUserInput();
 
-        if (playerChoice[0] > 0 && playerChoice[0] < 4 && playerChoice[1] > 0 && playerChoice[1] < 4) {
-            if (board[playerChoice[0] - 1][playerChoice[1] - 1] == ' ') {
-                board[playerChoice[0] - 1][playerChoice[1] - 1] = 'o';
-            }
+        if (board[playerChoice[0] - 1][playerChoice[1] - 1] == ' ') {
+            board[playerChoice[0] - 1][playerChoice[1] - 1] = 'o';
         }
 
         printBoard();
