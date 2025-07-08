@@ -1,4 +1,4 @@
 Project: TicTacToe
 By: MorphoCH22
 
-Simple game of TicTacToe programmed in C++. Currently not functional and a work in progress.
+Simple game of TicTacToe programmed in C++. Currently a functional console program.

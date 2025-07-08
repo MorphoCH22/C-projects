@@ -4,7 +4,10 @@ char board[3][3] { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '} };
 int moveCount = 0;
 
 void printBoard() {
+    std::cout << "      1    2    3 \n";
+    std::cout << "     ___  ___  ___\n";
     for (int i = 0; i < 3; i++) {
+        std::cout << (i + 1) << " | ";
         for (int j = 0; j < 3; j++) {
             std::cout << "[ " << board[i][j] << " ]";
         }
